@@ -8,6 +8,8 @@ import os
 
 import ahp
 from config.paths import *
+from config.theme import set_custom_theme
+
 
 def main():
     if os.path.exists(DS_PATH):
@@ -64,6 +66,7 @@ def main():
 
 
 if __name__ == "__main__":
+    set_custom_theme()
     with open("static/style.css", "r") as css_file:
         st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
     main()
