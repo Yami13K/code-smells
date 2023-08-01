@@ -8,18 +8,17 @@ from streamlit_pandas_profiling import st_profile_report
 import os
 
 import ahp
-import conf
-
+from config.paths import *
 
 def main():
-    if os.path.exists(conf.DS_PATH):
-        df = pd.read_csv(conf.DS_PATH, index_col=None)
+    if os.path.exists(DS_PATH):
+        df = pd.read_csv(DS_PATH, index_col=None)
     else:
         df = None
 
     with st.sidebar:
-        st.image(conf.IMAGE_URL)
-        st.title(conf.APP_TITLE)
+        st.image(IMAGE_URL)
+        st.title(APP_TITLE)
         choice = st.radio("Navigation", ["Input", "Profiling", "Modelling", "Download"])
         st.info("This project application helps you build and explore your data.")
 
@@ -28,7 +27,7 @@ def main():
         # file = st.file_uploader("Upload Your Dataset")
         # if file:
         #     df = pd.read_csv(file, index_col=None)
-        #     df.to_csv(conf.DS_PATH, index=None)
+        #     df.to_csv(DS_PATH, index=None)
         #     st.dataframe(df)
 
         ahp.ahp_view()
