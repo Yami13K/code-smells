@@ -5,7 +5,7 @@ from pycaret.regression import setup, compare_models, pull, save_model, load_mod
 import pandas as pd
 from streamlit_pandas_profiling import st_profile_report
 import os
-
+import pandas_profiling
 import ahp
 from config.paths import *
 from config.theme import set_custom_theme
