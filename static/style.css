@@ -1,0 +1,9 @@
+div.stButton > button {
+    /*background-color: rgb(204, 49, 49);*/
+    display: flex;
+    justify-content: center;
+    /*margin: 1rem;*/
+    margin-left: 15rem;
+    margin-top: 2rem;
+
+}

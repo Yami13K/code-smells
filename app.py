@@ -1,33 +1,71 @@
+from operator import index
 import streamlit as st
-from utils import PrepProcesor, columns 
-
-import numpy as np
+import plotly.express as px
+from pycaret.regression import setup, compare_models, pull, save_model, load_model
+import pandas_profiling
 import pandas as pd
-import joblib
+from streamlit_pandas_profiling import st_profile_report
+import os
 
-model = joblib.load('xgbpipe.joblib')
-st.title('Did they survive? :ship:')
-# PassengerId,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
-passengerid = st.text_input("Input Passenger ID", '123456') 
-pclass = st.selectbox("Choose class", [1,2,3])
-name  = st.text_input("Input Passenger Name", 'John Smith')
-sex = st.select_slider("Choose sex", ['male','female'])
-age = st.slider("Choose age",0,100)
-sibsp = st.slider("Choose siblings",0,10)
-parch = st.slider("Choose parch",0,2)
-ticket = st.text_input("Input Ticket Number", "12345") 
-fare = st.number_input("Input Fare Price", 0,1000)
-cabin = st.text_input("Input Cabin", "C52") 
-embarked = st.select_slider("Did they Embark?", ['S','C','Q'])
+import ahp
+import conf
 
-def predict(): 
-    row = np.array([passengerid,pclass,name,sex,age,sibsp,parch,ticket,fare,cabin,embarked]) 
-    X = pd.DataFrame([row], columns = columns)
-    prediction = model.predict(X)
-    if prediction[0] == 1: 
-        st.success('Passenger Survived :thumbsup:')
-    else: 
-        st.error('Passenger did not Survive :thumbsdown:') 
 
-trigger = st.button('Predict', on_click=predict)
+def main():
+    if os.path.exists(conf.DS_PATH):
+        df = pd.read_csv(conf.DS_PATH, index_col=None)
+    else:
+        df = None
 
+    with st.sidebar:
+        st.image(conf.IMAGE_URL)
+        st.title(conf.APP_TITLE)
+        choice = st.radio("Navigation", ["Input", "Profiling", "Modelling", "Download"])
+        st.info("This project application helps you build and explore your data.")
+
+    if choice == "Input":
+        # st.title("Upload Your Dataset")
+        # file = st.file_uploader("Upload Your Dataset")
+        # if file:
+        #     df = pd.read_csv(file, index_col=None)
+        #     df.to_csv(conf.DS_PATH, index=None)
+        #     st.dataframe(df)
+
+        ahp.ahp_view()
+
+    if choice == "Profiling":
+        if df is not None:  # Check if df is available before performing profiling
+            st.title("Exploratory Data Analysis")
+            profile_df = df.profile_report()
+            st_profile_report(profile_df)
+        else:
+            st.warning("Please upload a dataset first to perform profiling.")
+
+    if choice == "Modelling":
+        if df is not None:  # Check if df is available before running the model
+            chosen_target = st.selectbox("Choose the Target Column", df.columns)
+            if st.button("Run Modelling"):
+                setup(df, target=chosen_target, silent=True)
+                setup_df = pull()
+                st.dataframe(setup_df)
+                best_model = compare_models()
+                compare_df = pull()
+                st.dataframe(compare_df)
+                save_model(best_model, "best_model")
+        else:
+            st.warning("Please upload a dataset first to perform modeling.")
+
+    if choice == "Download":
+        if os.path.exists("best_model.pkl"):
+            with open("best_model.pkl", "rb") as f:
+                st.download_button("Download Model", f, file_name="best_model.pkl")
+        else:
+            st.warning(
+                "The model has not been generated yet. Please run the modeling step first."
+            )
+
+
+if __name__ == "__main__":
+    with open("static/style.css", "r") as css_file:
+        st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
+    main()
