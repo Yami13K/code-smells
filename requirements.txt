@@ -177,7 +177,6 @@ seaborn==0.12.2
 semver==2.13.0
 Send2Trash==1.8.2
 six==1.16.0
-sklearn==0.0.post7
 sktime==0.21.0
 smart-open==6.3.0
 smmap==5.0.0
