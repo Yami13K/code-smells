@@ -2,4 +2,4 @@ IMAGE_URL = 'https://training.javatpoint.com/uploads/blogs/d08f92e69686eb85e4395
 DS_PATH = './dataset.csv'
 
 #APP
-APP_TITLE = 'ReliaMain'
+APP_TITLE = 'FUCK KHALED\'s PUSSY'
