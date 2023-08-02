@@ -6,7 +6,7 @@ import os
 from codes.ahp import ahp_view
 from pandas_profiling import ProfileReport
 
-from codes.analysis import initial_analysis_view
+from codes.analysis import initial_analysis_view, pivoted_analysis_view
 from codes.github import git_url_view
 from config.paths import *
 from config.theme import set_custom_theme
@@ -27,6 +27,7 @@ def main():
     if choice == "Git Repo":
         git_url_view()
         initial_analysis_view()
+        pivoted_analysis_view()
         # if df is not None:  # Check if df is available before performing profiling
         #     st.title("Exploratory Data Analysis")
         #     profile_df = df.profile_report()
