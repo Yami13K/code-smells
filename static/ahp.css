@@ -3,7 +3,7 @@ div.stButton > button {
     display: flex;
     justify-content: center;
     /*margin: 1rem;*/
-    margin-left: 15rem;
+    margin-left: 13rem;
     margin-top: 2rem;
 
 }
@@ -11,10 +11,4 @@ div.stButton > button {
 body {
     color: #262730;
     background-color: #f5f5f5;
-}
-
-/* Set the primary color for buttons */
-.stButton button {
-    background-color: #04c4e6 !important;
-    color: #ffffff !important;
 }

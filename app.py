@@ -1,12 +1,11 @@
-from operator import index
 import streamlit as st
-import plotly.express as px
-from pycaret.regression import setup, compare_models, pull, save_model, load_model
+from pycaret.regression import setup, compare_models, pull, save_model
 import pandas as pd
 from streamlit_pandas_profiling import st_profile_report
 import os
-import pandas_profiling
-import ahp
+from codes.ahp import ahp_view
+from pandas_profiling import ProfileReport
+from codes.github import git_url_view
 from config.paths import *
 from config.theme import set_custom_theme
 
@@ -20,26 +19,34 @@ def main():
     with st.sidebar:
         st.image(IMAGE_URL)
         st.title(APP_TITLE)
-        choice = st.radio("Navigation", ["Input", "Profiling", "Modelling", "Download"])
+        choice = st.radio("Navigation", ["Git Repo", "AHP picker", "Modelling", "Download"])
         st.info("This project application helps you build and explore your data.")
 
-    if choice == "Input":
+    if choice == "Git Repo":
+
+        with open("static/git.css", "r") as css_file:
+            st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
+
+        git_url_view()
+        # if df is not None:  # Check if df is available before performing profiling
+        #     st.title("Exploratory Data Analysis")
+        #     profile_df = df.profile_report()
+        #     st_profile_report(profile_df)
+        # else:
+        #     st.warning("Please upload a dataset first to perform profiling.")
+
+    if choice == "AHP picker":
         # st.title("Upload Your Dataset")
         # file = st.file_uploader("Upload Your Dataset")
         # if file:
         #     df = pd.read_csv(file, index_col=None)
         #     df.to_csv(DS_PATH, index=None)
         #     st.dataframe(df)
+        with open("static/ahp.css", "r") as css_file:
+            st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
+        ahp_view()
 
-        ahp.ahp_view()
 
-    if choice == "Profiling":
-        if df is not None:  # Check if df is available before performing profiling
-            st.title("Exploratory Data Analysis")
-            profile_df = df.profile_report()
-            st_profile_report(profile_df)
-        else:
-            st.warning("Please upload a dataset first to perform profiling.")
 
     if choice == "Modelling":
         if df is not None:  # Check if df is available before running the model
@@ -66,7 +73,4 @@ def main():
 
 
 if __name__ == "__main__":
-    set_custom_theme()
-    with open("static/style.css", "r") as css_file:
-        st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
     main()
