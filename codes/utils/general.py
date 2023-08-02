@@ -1,8 +1,9 @@
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
 import numpy as np
 from pycaret.clustering import plot_model
+import plotly.express as px
+import plotly.graph_objects as go
 
 
 def softmax(x):
@@ -29,7 +30,7 @@ def toggle_button(
     button_text: str = "Toggle",
 ):
     col1, col2 = st.columns([4, 1])  # Adjust column widths as needed
-    col1.title(title)
+    col1.subheader(title)
 
     # Add a button to show/hide the DataFrame
     if col2.button(button_text, key=session_var):
@@ -52,20 +53,4 @@ def title_plot(results, plot: str):
     plot_model(results, plot=plot)
 
 
-def custom_distribution_plot(results):
-    st.title('Custom Distribution Plot')
 
-    # Get the cluster results
-    cluster_labels = results['Cluster'].values
-
-    # Create a histogram of cluster assignments
-    plt.hist(cluster_labels, bins=np.arange(0.5, len(np.unique(cluster_labels)) + 1.5) - 0.5, alpha=0.7)
-
-    plt.xlabel('Cluster')
-    plt.ylabel('Count')
-    plt.title('Distribution of Clusters')
-    plt.xticks(np.unique(cluster_labels))
-    plt.grid(True)
-
-    # Display the plot using Streamlit
-    st.pyplot(plt.gcf())

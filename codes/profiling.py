@@ -9,7 +9,11 @@ def profile_df(df):
 
     if df is not None:
         st.title("Exploratory Data Analysis")
-        if st.button("Start EDA!"):
+
+        # Use st.empty() to create a placeholder for the button
+        button_placeholder = st.empty()
+
+        if button_placeholder.button("Start EDA!"):
             # Perform profiling and generate the report
             profile_df = ProfileReport(
                 df, title="Pandas Profiling Report", explorative=True
@@ -17,5 +21,8 @@ def profile_df(df):
 
             # Display the profiling report
             st_profile_report(profile_df)
+
+            # Clear the button placeholder
+            button_placeholder.empty()
     else:
         st.warning("Please upload a dataset first to perform profiling.")
