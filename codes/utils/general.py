@@ -1,7 +1,8 @@
 import pandas as pd
 import streamlit as st
-
+import matplotlib.pyplot as plt
 import numpy as np
+from pycaret.clustering import plot_model
 
 
 def softmax(x):
@@ -24,7 +25,7 @@ def toggle_button(
     session_state: SessionState,
     session_var: str,
     title: str,
-    df: pd.DataFrame,
+    data,
     button_text: str = "Toggle",
 ):
     col1, col2 = st.columns([4, 1])  # Adjust column widths as needed
@@ -39,4 +40,32 @@ def toggle_button(
 
     # Display DataFrame based on button state
     if hasattr(session_state, session_var) and getattr(session_state, session_var):
-        st.dataframe(df)
+        if isinstance(data, pd.DataFrame):
+            st.dataframe(data)
+        else:
+            st.pyplot(data)
+
+
+def title_plot(results, plot: str):
+    st.title(plot.capitalize() + 'Plot')
+    # Create the plot using plot_model from PyCaret
+    plot_model(results, plot=plot)
+
+
+def custom_distribution_plot(results):
+    st.title('Custom Distribution Plot')
+
+    # Get the cluster results
+    cluster_labels = results['Cluster'].values
+
+    # Create a histogram of cluster assignments
+    plt.hist(cluster_labels, bins=np.arange(0.5, len(np.unique(cluster_labels)) + 1.5) - 0.5, alpha=0.7)
+
+    plt.xlabel('Cluster')
+    plt.ylabel('Count')
+    plt.title('Distribution of Clusters')
+    plt.xticks(np.unique(cluster_labels))
+    plt.grid(True)
+
+    # Display the plot using Streamlit
+    st.pyplot(plt.gcf())

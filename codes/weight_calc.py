@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from codes.stub import AHP_SCORES
-from codes.utils.df import calculate_score
+from codes.utils.df import calculate_score, pivotiser_aggregator
 from codes.utils.general import softmax
 from config.static import *
 
@@ -24,6 +24,7 @@ def normalize_dicts(original_dict: dict):
 
 
 def score_pipeline(df: pd.DataFrame):
+    df = pivotiser_aggregator(df)
     quality_to_value = dict(zip(SUB_CATEGORIES, AHP_SCORES))
     metric_sums = calculate_metric_sum(METRICS_TO_SUB_CATEGORIES, quality_to_value)
     soft_metrics = normalize_dicts(metric_sums)

@@ -4,9 +4,9 @@ from codes.utils.df import *
 from codes.utils.general import toggle_button
 from codes.weight_calc import score_pipeline
 from config.paths import DS_PATH
+from config.static import SESSION_STATE
 
 DF = df_loader(DS_PATH).drop(["Project Name", "Type Name", "Unnamed: 0"], axis=1)
-SESSION_STATE = SessionState()  # Create an instance of the custom SessionState class
 
 
 def initial_analysis_view():
@@ -28,7 +28,6 @@ def aggregated_analysis_view():
 
 def score_analysis_view():
     df = DF.copy()
-    df = pivotiser_aggregator(df)
     df = score_pipeline(df)
     toggle_button(SESSION_STATE, "score", "Package Smell Score", df)
 
