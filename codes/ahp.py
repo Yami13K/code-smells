@@ -2,6 +2,8 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
+from config.static import SUB_CATEGORIES
+
 
 def ahp_view():
     #     st.dataframe(df)
@@ -13,13 +15,8 @@ def ahp_view():
     st.write("Enter your opinions for each code smell in proportion to each other:")
 
     # Initialize sub-categories and the AHP matrix
-    sub_categories = [
-        "Modularity",
-        "Analyzability",
-        "Testability",
-        "Modifiability",
-        "Reusability",
-    ]
+    sub_categories = SUB_CATEGORIES
+
     matrix = np.ones((5, 5))
     # Create layout with columns
     col1, col2 = st.columns(2)

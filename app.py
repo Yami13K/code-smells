@@ -6,9 +6,15 @@ import os
 from codes.ahp import ahp_view
 from pandas_profiling import ProfileReport
 
-from codes.analysis import initial_analysis_view, pivoted_analysis_view
+from codes.analysis import (
+    aggregated_analysis_view,
+    initial_analysis_view,
+    pivoted_analysis_view,
+    score_analysis_view,
+)
 from codes.github import git_url_view
 from config.paths import *
+from config.static import NAVIGATION
 from config.theme import set_custom_theme
 
 
@@ -21,44 +27,28 @@ def main():
     with st.sidebar:
         st.image(IMAGE_URL)
         st.title(APP_TITLE)
-        choice = st.radio("Navigation", ["Git Repo", "AHP picker", "Modelling", "Download"])
+        choice = st.radio(
+            "Navigation", NAVIGATION
+        )
         st.info("This project application helps you build and explore your data.")
 
     if choice == "Git Repo":
         git_url_view()
         initial_analysis_view()
         pivoted_analysis_view()
-        # if df is not None:  # Check if df is available before performing profiling
-        #     st.title("Exploratory Data Analysis")
-        #     profile_df = df.profile_report()
-        #     st_profile_report(profile_df)
-        # else:
-        #     st.warning("Please upload a dataset first to perform profiling.")
+        aggregated_analysis_view()
+        score_analysis_view()
 
     if choice == "AHP picker":
-        # st.title("Upload Your Dataset")
-        # file = st.file_uploader("Upload Your Dataset")
-        # if file:
-        #     df = pd.read_csv(file, index_col=None)
-        #     df.to_csv(DS_PATH, index=None)
-
         ahp_view()
 
-
-
-    if choice == "Modelling":
-        if df is not None:  # Check if df is available before running the model
-            chosen_target = st.selectbox("Choose the Target Column", df.columns)
-            if st.button("Run Modelling"):
-                setup(df, target=chosen_target, silent=True)
-                setup_df = pull()
-                st.dataframe(setup_df)
-                best_model = compare_models()
-                compare_df = pull()
-                st.dataframe(compare_df)
-                save_model(best_model, "best_model")
+    if choice == "Profiling":
+        if df is not None:  # Check if df is available before performing profiling
+            st.title("Exploratory Data Analysis")
+            profile_df = df.profile_report()
+            st_profile_report(profile_df)
         else:
-            st.warning("Please upload a dataset first to perform modeling.")
+            st.warning("Please upload a dataset first to perform profiling.")
 
     if choice == "Download":
         if os.path.exists("best_model.pkl"):
