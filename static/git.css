@@ -3,8 +3,9 @@ div.stButton > button {
     display: flex;
     justify-content: center;
     /*margin: 1rem;*/
-    margin-left: 1rem;
+    margin-right: 1rem;
     margin-top: 1.7rem;
+    width: 7rem;
 
 }
 

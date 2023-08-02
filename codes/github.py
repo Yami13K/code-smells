@@ -4,8 +4,10 @@ import streamlit as st
 
 
 def git_url_view():
-    st.title("GitHub Repo URL Submission")
+    with open("static/git.css", "r") as css_file:
+        st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
 
+    st.title("GitHub Repo URL Submission")
     # Create two columns layout
     col1, col2 = st.columns([4, 1])  # Adjust column widths as needed
 

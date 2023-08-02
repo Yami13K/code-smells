@@ -5,6 +5,8 @@ from streamlit_pandas_profiling import st_profile_report
 import os
 from codes.ahp import ahp_view
 from pandas_profiling import ProfileReport
+
+from codes.analysis import initial_analysis_view
 from codes.github import git_url_view
 from config.paths import *
 from config.theme import set_custom_theme
@@ -23,11 +25,8 @@ def main():
         st.info("This project application helps you build and explore your data.")
 
     if choice == "Git Repo":
-
-        with open("static/git.css", "r") as css_file:
-            st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
-
         git_url_view()
+        initial_analysis_view()
         # if df is not None:  # Check if df is available before performing profiling
         #     st.title("Exploratory Data Analysis")
         #     profile_df = df.profile_report()
@@ -41,9 +40,7 @@ def main():
         # if file:
         #     df = pd.read_csv(file, index_col=None)
         #     df.to_csv(DS_PATH, index=None)
-        #     st.dataframe(df)
-        with open("static/ahp.css", "r") as css_file:
-            st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
+
         ahp_view()
 
 

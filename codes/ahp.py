@@ -4,6 +4,10 @@ import pandas as pd
 
 
 def ahp_view():
+    #     st.dataframe(df)
+    with open("static/ahp.css", "r") as css_file:
+        st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
+
     # Page title and description
     st.title("AHP Matrix Input")
     st.write("Enter your opinions for each code smell in proportion to each other:")
