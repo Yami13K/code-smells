@@ -38,3 +38,5 @@ SMELLS_TO_METRICS = {
     "Modularization": [METRICS[0], METRICS[3], METRICS[-1]],
     "Hierarchy": METRICS[1:3],
 }
+
+WARNING = 'please input a github repo first in the first section'

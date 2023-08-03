@@ -2,6 +2,8 @@ from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 import streamlit as st
 
+from config.static import WARNING
+
 
 def profile_df(df):
     with open("static/eda.css", "r") as css_file:
@@ -18,4 +20,4 @@ def profile_df(df):
             # Display the profiling report
             st_profile_report(profile_df)
     else:
-        st.warning("Please upload a dataset first to perform profiling.")
+        st.warning(WARNING)
