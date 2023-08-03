@@ -10,7 +10,9 @@ def profile_df(df):
         st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
 
     if df is not None:
-        st.title("Exploratory Data Analysis")
+        _, col = st.columns([1, 13])
+        with col:
+            st.title("Exploratory Data Analysis")
 
         # Use st.empty() to create a placeholder for the button
         button_placeholder = st.empty()

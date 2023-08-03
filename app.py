@@ -1,10 +1,7 @@
 import streamlit as st
 import pandas as pd
-
 import os
 from codes.ahp import ahp_view
-
-
 from codes.analysis import (
     aggregated_analysis_view,
     initial_analysis_view,
@@ -28,9 +25,7 @@ def main():
     with st.sidebar:
         st.image(IMAGE_URL)
         st.title(APP_TITLE)
-        choice = st.radio(
-            "Navigation", NAVIGATION
-        )
+        choice = st.radio("Navigation", NAVIGATION, index=3)
         st.info("This project application helps you build and explore your data.")
 
     if choice == "Git Repo":
