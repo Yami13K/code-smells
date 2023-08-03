@@ -53,7 +53,7 @@ def main():
             )
         else:
             score_df = score_pipeline(df)
-            # clusterize(score_df)
+            clusterize(score_df)
 
 
 if __name__ == "__main__":
