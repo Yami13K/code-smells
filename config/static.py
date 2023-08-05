@@ -1,6 +1,4 @@
-from codes.utils.ahp import load_json_matrix
 from codes.utils.general import SessionState
-from config.paths import MAPPING_DICT_PATH
 
 SESSION_STATE = SessionState()
 
@@ -34,6 +32,11 @@ METRICS = [
     "LCOM",
 ]
 
-SMELLS_TO_METRICS = load_json_matrix(MAPPING_DICT_PATH)
+SMELLS_TO_METRICS = {
+    "Abstraction": [*METRICS[:2], METRICS[-1]],
+    "Encapsulation": [METRICS[3]],
+    "Modularization": [METRICS[0], METRICS[3], METRICS[-1]],
+    "Hierarchy": METRICS[1:3],
+}
 
 WARNING = 'please input a github repo first in the first section'
