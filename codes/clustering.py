@@ -4,6 +4,8 @@ from codes.utils.clustering import *
 from codes.utils.general import styler
 from config.static import WARNING
 
+from pycaret.clustering import *
+
 
 def clusterize(scores_df):
     def reset():
@@ -14,7 +16,7 @@ def clusterize(scores_df):
     if scores_df is not None:
         spinner = st.spinner("Visualising...")
 
-        styler('clustering')
+        styler("clustering")
 
         _, col = st.columns([1, 13])
         with col:
@@ -39,13 +41,10 @@ def clusterize(scores_df):
             reset()
 
             with spinner:
+                clusterize_pycaret(scores_df, cluster_num)
                 result, centroids = kmeans(scores_df, cluster_num)
                 custom_distribution_plot(result)
                 centroids_plot(result, centroids)
-                elbow_plot(scores_df)
-                label = np.array(scores_df["Cluster"])
-                data = np.array(scores_df["Score"]).reshape(-1, 1)
-                plot_silhouette(data, label)
             # st.balloons()
 
             _, button_col = st.columns([13, 20])
@@ -55,3 +54,11 @@ def clusterize(scores_df):
 
     else:
         st.warning(WARNING)
+
+
+def clusterize_pycaret(scores_df, num):
+    exp_clu = setup(data=scores_df, session_id=123, preprocess=False, normalize=False)
+    kmeans = create_model("kmeans", num_clusters=num)
+    result = assign_model(kmeans)
+    plot_model(kmeans, "elbow", display_format="streamlit")
+    plot_model(kmeans, "silhouette", display_format="streamlit")

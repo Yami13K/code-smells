@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import streamlit as st
 from codes.stub import AHP_SCORES
 from codes.utils.df import calculate_score, pivotiser_aggregator
 from codes.utils.general import softmax
@@ -21,7 +21,6 @@ def normalize_dicts(original_dict: dict):
         key: value for key, value in zip(original_dict.keys(), softmax_output)
     }
     return softmax_dict
-
 
 def score_pipeline(df: pd.DataFrame):
     df = pivotiser_aggregator(df)

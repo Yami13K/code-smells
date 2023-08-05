@@ -1,6 +1,8 @@
 import streamlit as st
 
-from codes.utils.general import styler
+from codes.utils.ahp import save_matrix_json
+from codes.utils.general import styler, toast
+from config.paths import MAPPING_DICT_PATH
 
 
 def ck_mapper_view():
@@ -31,6 +33,8 @@ def ck_mapper_view():
         # Check if all criteria have selected metrics
         if all(selected_metrics.values()):
             st.write("Selected Metrics:")
+            toast('Map Dictionary')
+            save_matrix_json(selected_metrics, MAPPING_DICT_PATH)
             st.write(selected_metrics)
         else:
             st.error("Error: All fields should have values!")

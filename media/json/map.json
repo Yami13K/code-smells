@@ -1,0 +1,17 @@
+{
+    "Modularity": [
+        "CBO"
+    ],
+    "Analyzability": [
+        "NOC"
+    ],
+    "Testability": [
+        "NOC"
+    ],
+    "Reusability": [
+        "DIT"
+    ],
+    "Modifiability": [
+        "DIT"
+    ]
+}

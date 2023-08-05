@@ -8,12 +8,10 @@ from config.static import WARNING
 
 def profile_df(df):
     styler("eda")
-
+    _, col = st.columns([1, 13])
+    with col:
+        st.title("Exploratory Data Analysis")
     if df is not None:
-        _, col = st.columns([1, 13])
-        with col:
-            st.title("Exploratory Data Analysis")
-
         # Use st.empty() to create a placeholder for the button
         button_placeholder = st.empty()
 

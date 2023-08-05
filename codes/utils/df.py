@@ -1,6 +1,7 @@
 import pandas as pd
 
-from config.static import SMELLS
+from codes.utils.general import toggle_button
+from config.static import SESSION_STATE, SMELLS
 
 
 def df_loader(path: str):
@@ -73,3 +74,16 @@ def calculate_score(df, weighted_array):
     )
     df = df.set_index(df.columns[0])
     return df
+
+
+def drop_unrelated(*button_args):
+    def decorator(func):
+        def wrapper(df):
+            if isinstance(df, pd.DataFrame):
+                df = df.drop(["Project Name", "Type Name", "Unnamed: 0"], axis=1)
+                df = func(df)
+            print('fuck me', df)
+            toggle_button(SESSION_STATE, *button_args, df)
+            return df
+        return wrapper
+    return decorator
