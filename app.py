@@ -10,22 +10,21 @@ from codes.analysis import (
 )
 from codes.clustering import clusterize
 from codes.github import git_url_view
+from codes.mapper import ck_mapper_view
 from codes.profiling import profile_df
+from codes.utils.general import exists
 from codes.weight_calc import score_pipeline
 from config.paths import *
 from config.static import NAVIGATION
 
 
 def main():
-    if os.path.exists(DS_PATH):
-        df = pd.read_csv(DS_PATH, index_col=None)
-    else:
-        df = None
+    df = exists(DS_PATH)
 
     with st.sidebar:
         st.image(IMAGE_URL)
         st.title(APP_TITLE)
-        choice = st.radio("Navigation", NAVIGATION, index=3)
+        choice = st.radio("Navigation", NAVIGATION, index=0)
         st.info("This project application helps you build and explore your data.")
 
     if choice == "Git Repo":
@@ -37,6 +36,9 @@ def main():
 
     if choice == "AHP picker":
         ahp_view()
+
+    if choice == "Mapper":
+        ck_mapper_view()
 
     if choice == "Profiling":
         profile_df(df)

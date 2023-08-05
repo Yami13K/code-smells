@@ -4,7 +4,7 @@ SESSION_STATE = SessionState()
 
 SMELLS = ["Abstraction", "Encapsulation", "Modularization", "Hierarchy"]
 
-NAVIGATION = ["Git Repo", "AHP picker", "Profiling", "Clustering"]
+NAVIGATION = ["Git Repo", "AHP picker", "Mapper",  "Profiling", "Clustering", ]
 
 SUB_CATEGORIES = [
     "Modularity",

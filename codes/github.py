@@ -2,10 +2,11 @@ import time
 
 import streamlit as st
 
+from codes.utils.general import styler
+
 
 def git_url_view():
-    with open("static/git.css", "r") as css_file:
-        st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
+    styler('git')
 
     st.title("GitHub Repo URL Submission")
     # Create two columns layout

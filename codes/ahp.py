@@ -2,12 +2,12 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
+from codes.utils.general import styler
 from config.static import SUB_CATEGORIES
 
 
 def ahp_view():
-    with open("static/ahp.css", "r") as css_file:
-        st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
+    styler('ahp')
 
     st.title("AHP Matrix Input")
     st.write("Enter your opinions for each code smell in proportion to each other:")

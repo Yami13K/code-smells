@@ -2,12 +2,12 @@ from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 import streamlit as st
 
+from codes.utils.general import styler
 from config.static import WARNING
 
 
 def profile_df(df):
-    with open("static/eda.css", "r") as css_file:
-        st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
+    styler("eda")
 
     if df is not None:
         _, col = st.columns([1, 13])

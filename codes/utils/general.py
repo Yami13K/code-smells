@@ -1,9 +1,10 @@
+import os
+
 import pandas as pd
 import streamlit as st
 import numpy as np
 from pycaret.clustering import plot_model
-import plotly.express as px
-import plotly.graph_objects as go
+
 
 
 def softmax(x):
@@ -48,9 +49,17 @@ def toggle_button(
 
 
 def title_plot(results, plot: str):
-    st.title(plot.capitalize() + 'Plot')
+    st.title(plot.capitalize() + "Plot")
     # Create the plot using plot_model from PyCaret
     plot_model(results, plot=plot)
 
 
+def styler(file_name):
+    with open(f"static/{file_name}.css", "r") as css_file:
+        st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
 
+def exists(DS_PATH):
+    if os.path.exists(DS_PATH):
+        return pd.read_csv(DS_PATH, index_col=None)
+    else:
+        return None

@@ -1,6 +1,7 @@
 from sklearn.cluster import KMeans
 
 from codes.utils.clustering import *
+from codes.utils.general import styler
 from config.static import WARNING
 
 
@@ -13,8 +14,7 @@ def clusterize(scores_df):
     if scores_df is not None:
         spinner = st.spinner("Visualising...")
 
-        with open("static/clustering.css", "r") as css_file:
-            st.markdown(f"<style>{css_file.read()}</style>", unsafe_allow_html=True)
+        styler('clustering')
 
         _, col = st.columns([1, 13])
         with col:
@@ -43,8 +43,8 @@ def clusterize(scores_df):
                 custom_distribution_plot(result)
                 centroids_plot(result, centroids)
                 elbow_plot(scores_df)
-                data = np.array(scores_df["Score"]).reshape(-1, 1)
                 label = np.array(scores_df["Cluster"])
+                data = np.array(scores_df["Score"]).reshape(-1, 1)
                 plot_silhouette(data, label)
             # st.balloons()
 
