@@ -1,6 +1,6 @@
 import streamlit as st
 
-from codes.utils.ahp import save_matrix_json
+from codes.utils.ahp import load_json_matrix, save_matrix_json
 from codes.utils.general import styler, toast
 from config.paths import MAPPING_DICT_PATH
 
@@ -32,8 +32,8 @@ def ck_mapper_view():
     if st.button("Submit"):
         # Check if all criteria have selected metrics
         if all(selected_metrics.values()):
-            st.write("Selected Metrics:")
             toast('Map Dictionary')
+            st.write("Selected Metrics:")
             save_matrix_json(selected_metrics, MAPPING_DICT_PATH)
             st.write(selected_metrics)
         else:

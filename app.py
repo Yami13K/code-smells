@@ -49,13 +49,8 @@ def main():
         profile_df(df)
 
     if choice == "Clustering":
-        if df is None:
-            st.warning(
-                "The model has not been generated yet. Please run the modeling step first."
-            )
-        else:
-            score_df = score_pipeline(df)
-            clusterize(score_df)
+
+        clusterize(df)
 
 
 if __name__ == "__main__":

@@ -1,17 +1,18 @@
 {
     "Modularity": [
-        "CBO"
+        "NOC",
+        "LCOM"
     ],
     "Analyzability": [
-        "NOC"
+        "WMC"
     ],
     "Testability": [
         "NOC"
     ],
     "Reusability": [
-        "DIT"
+        "CBO"
     ],
     "Modifiability": [
-        "DIT"
+        "NOC"
     ]
 }

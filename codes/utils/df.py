@@ -82,7 +82,6 @@ def drop_unrelated(*button_args):
             if isinstance(df, pd.DataFrame):
                 df = df.drop(["Project Name", "Type Name", "Unnamed: 0"], axis=1)
                 df = func(df)
-            print('fuck me', df)
             toggle_button(SESSION_STATE, *button_args, df)
             return df
         return wrapper

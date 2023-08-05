@@ -2,18 +2,23 @@ from sklearn.cluster import KMeans
 
 from codes.utils.clustering import *
 from codes.utils.general import styler
+from codes.weight_calc import score_pipeline
 from config.static import WARNING
 
 from pycaret.clustering import *
 
 
-def clusterize(scores_df):
+def clusterize(df):
     def reset():
         button_placeholder.empty()
         clusters_input.empty()
         title.title("Clustering Metrics Visualisation")
 
-    if scores_df is not None:
+    if df is None:
+        st.warning(WARNING)
+
+    else:
+        scores_df = score_pipeline(df)
         spinner = st.spinner("Visualising...")
 
         styler("clustering")
@@ -24,12 +29,13 @@ def clusterize(scores_df):
 
         title.title("Select Maintenance Specificity")
 
-        _, text_col, _ = st.columns([4, 1.5, 5])
+        _, text_col, _ = st.columns([4, 1.66, 5])
 
         with text_col:
             clusters_input = st.empty()
+
             cluster_num = clusters_input.number_input(
-                " clustering num", min_value=2, max_value=10, value=3
+                " clusters number", min_value=2, max_value=10, value=3,
             )
         _, button_col = st.columns([10, 20])
 
@@ -51,9 +57,6 @@ def clusterize(scores_df):
             with button_col:
                 if st.button("Reset", key="reset_button"):
                     clusterize(scores_df)
-
-    else:
-        st.warning(WARNING)
 
 
 def clusterize_pycaret(scores_df, num):
