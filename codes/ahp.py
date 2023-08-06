@@ -18,7 +18,7 @@ def ahp_view():
     sub_categories = SUB_CATEGORIES
 
     matrix = np.ones((5, 5))
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([7,20])
 
     with col1:
         for i in range(5):
@@ -42,8 +42,8 @@ def ahp_view():
 
     with col2:
         df = pd.DataFrame(matrix, columns=sub_categories, index=sub_categories)
-        table_html = df.to_html(classes="custom-dataframe", index=False)
-        st.markdown(table_html, unsafe_allow_html=True)
+        # table_html = df.to_html(classes="custom-dataframe", index=False)
+        st.dataframe(df, width=2000, )
 
         if st.button("Submit", key="submit_button"):
             save_matrix_json(matrix.tolist(), AHP_MATRIX_PATH)
